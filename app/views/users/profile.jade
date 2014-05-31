@@ -1,0 +1,21 @@
+extends ../layouts/layout
+
+block content
+  .btn-group
+    a(href='/inventory/new').btn.btn-default Add Inventory Item
+    a(href='/challan/new').btn.btn-default Add New Challan
+  
+  br
+  hr
+  
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th Challan #
+        th # of Items
+        th Out
+        th In
+        th Status
+    tbody
+      tr
+        td

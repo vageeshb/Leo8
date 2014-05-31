@@ -1,0 +1,43 @@
+extends ../layouts/layout
+
+block content
+  form.form-horizontal(action='/challan/new', method='POST', role='form')
+    .form-group
+      legend Add New Challan
+    .form-group
+      table.table.table-bordered
+        thead
+          tr
+            th.col-sm-1.text-center
+              span.glyphicon.glyphicon-info-sign
+            th.col-sm-2 Item Name
+            th.col-sm-1 Qty
+            th.col-sm-2 Date Out
+            th.col-sm-2 Date In
+            th.col-sm-2 To
+            th.col-sm-2 From
+        tbody
+          tr
+            td.col-sm-1.text-center
+              a.btn.btn-sm.btn-danger.disabled
+                span.glyphicon.glyphicon-trash
+            td.col-sm-2
+              select(name="itemName", id="itemName").form-control 
+                option -- Select an item --
+                - each item in items
+                  option(value=item.name, id=item.id)= item.name
+            td.col-sm-1
+              select(name='itemQty', id='itemQty').form-control
+                option --
+            td.col-sm-2
+              input.form-control(id='itemOut', name='itemOut', type="text")
+            td.col-sm-2
+              input.form-control(id='itemIn', name='itemIn', type="text")
+            td.col-sm-2
+              input.form-control(id='itemTo', name='itemTo', type='text')
+            td.col-sm-2
+              input.form-control(id='itemFrom', name='itemFrom', type='text')
+            
+     button#addLine(type="button").btn.btn-primary Add Line
+     button(type="submit").btn.btn-primary Submit
+  script(src='/js/challan.js')

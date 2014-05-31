@@ -1,0 +1,13 @@
+if (message && message.length > 0)
+  .alert.alert-danger
+    button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+    h4= message
+
+if (error)
+  .alert.alert-danger
+    button.close(type='button', data-dismiss='alert', aria-hidden='true') &times;
+    if (error.errors)
+      h4 #{error.message} because of the following:
+      ul
+        - for (var x = 0; x < error.errors.length; x++)
+          li= error.errors[x]

@@ -1,0 +1,19 @@
+extends ../layouts/layout
+
+block content
+  table.table.table-bordered.table-hover
+    thead
+      tr
+        th(rowspan=2).text-center No
+        th(rowspan=2).text-center Name
+        th(rowspan=2).text-center Quatity
+        th(rowspan=2).text-center Date Out
+        th(rowspan=2).text-center Date In
+        th(colspan=2).text-center To
+        th.text-center From
+      tr
+        th.text-center Company Name
+        th.text-center Rep Name
+        th.text-center Name
+    tbody
+        =challans

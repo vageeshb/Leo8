@@ -7,6 +7,9 @@ module.exports = {
   },
   getSignup: function(req, res) {
     res.render('users/signup', {user: req.user, message: req.flash('error') });
+  },
+  getProfile: function(req, res) {
+    res.render('users/profile', { user: req.user });
   }
 
 };
