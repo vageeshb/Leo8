@@ -1,10 +1,20 @@
-Node-Express-Starter-Kit
+Leo 8 - Challan/Inventory Management
 ========================
 
-Seed project to create web applications using Node.js, Express.js and MongoDB with authentication using Passport.js
+Web application to manage new challans and inventories for the client - Leo8
 
-## Instructions ##
-* Git clone repository
-* Uses grunt for task automation while developing
-* Uses bower for front end dependency management
-* Application structure is straight-forward to understand how to organize your app
+## Road Map ##
+* Challan
+  * List - In-Progress
+  * New - In-Progress
+  * Edit
+  * View
+  * Delete
+* Inventory
+  * List
+  * ~~New~~
+  * Edit
+  * View
+  * Delete
+* Admin Dashboard
+* User Dashboard
