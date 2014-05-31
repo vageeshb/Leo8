@@ -1,5 +1,5 @@
 nav.navbar.navbar-inverse
-  a(href="/").navbar-brand= title
+  a(href="/").navbar-brand= (title == null) ? "Leo 8" : "Leo 8 | " + title
   ul.nav.navbar-nav.pull-right
     li.active
       a(href="/") Home
