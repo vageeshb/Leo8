@@ -8,9 +8,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user.js');
 
 // Exposing passport functions to our app
-
-module.exports = function(passport) {
-
+module.exports = function (passport) {
+  
   // ============================================
   // PASSPORT SESSION SETUP
   // ============================================
@@ -28,6 +27,9 @@ module.exports = function(passport) {
   // ============================================
 
   passport.use('signup', new LocalStrategy(
+  {
+    passReqToCallback: true
+  },
   function (req, username, password, done) {
     // asynchronous
     // User.findOne wont fire unless data is sent back
@@ -36,8 +38,9 @@ module.exports = function(passport) {
       // find a user whose username is the same as the forms username
       User.findOne({ 'username' :  username }, function(err, user) {
         // if there are any errors, return the error
-        if (err)
+        if (err) {
           return done(err);
+        }
 
         // check to see if theres already a user with that username
         if (user) {
@@ -49,7 +52,7 @@ module.exports = function(passport) {
           var newUser       = new User();
 
           // set the user's local credentials
-          newUser.username  = req.body.name;
+          newUser.username  = req.body.username;
           newUser.password  = req.body.password;
           newUser.role      = "1";
           // save the user
@@ -62,9 +65,12 @@ module.exports = function(passport) {
       });    
     });
   }));
-  
+
   // Login Strategy
   passport.use('login', new LocalStrategy(
+  {
+    passReqToCallback: true
+  },
   function (req, username, password, done) {
     process.nextTick(function() {
       User.findOne({'username' : username}, function(err, user) {

@@ -5,10 +5,27 @@ var home = require('./home'),
 
 module.exports = function(app, passport) {
   
-  app.get('/', isAuthenticated, home.index);
+  app.get('/', home.index);
 
-  app.get('/login', user.login);
+  app.get('/login', user.getLogin);
+
+  app.post('/login', passport.authenticate('login', {
+    successRedirect : '/profile', // Authentication successful
+    failureRedirect : '/login',   // Authentication failure
+    failureFlash    : true        // Show flash in failure
+  }));
+
+  app.get('/signup', user.getSignup);
+  app.post('/signup', passport.authenticate('signup', {
+    successRedirect : '/profile', // Authentication successful
+    failureRedirect : '/signup',   // Authentication failure
+    failureFlash    : true        // Show flash in failure
+  }));
   
+  app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/') ;
+  });
 };
 
 // User authentication

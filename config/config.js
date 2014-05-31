@@ -7,9 +7,9 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
-  passport = require('passport');
+  flash = require('connect-flash');
 
-module.exports = function (app) {
+module.exports = function (app, passport) {
 
   // View Engine Setup
   app.set('views', path.join(__dirname, '../app/views'));
@@ -24,6 +24,7 @@ module.exports = function (app) {
   app.use(session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
   app.use(express.static(path.join(__dirname, '../public')));
   app.set('port', process.env.PORT || 3000);
   

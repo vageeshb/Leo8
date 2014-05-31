@@ -1,0 +1,13 @@
+nav.navbar.navbar-inverse
+  a(href="/").navbar-brand Title
+  ul.nav.navbar-nav.pull-right
+    li.active
+      a(href="/") Home
+    if (user)
+      li
+        a(href="/logout") Logout
+    else 
+      li
+        a(href='/login') Login
+      li
+        a(href='/signup') Signup

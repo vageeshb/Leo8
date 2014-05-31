@@ -4,13 +4,18 @@ var express = require('express'),
   app = express(),
   mongoose = require('mongoose'),
   db = require('./config/db'),
-  passport = require('./config/passport');
+  pass = require('./config/passport'),
+  passport = require('passport');
+
 
 // Database
 mongoose.connect(db.url);
 
+// Authentication
+require('./config/passport.js')(passport);
+
 // Configurations
-require('./config/config')(app);
+require('./config/config')(app, passport);
 
 // Consolidated Routes
 require('./app/routes/')(app, passport);
