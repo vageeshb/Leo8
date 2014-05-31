@@ -2,6 +2,6 @@
 
 module.exports = {
   
-  url: 'mongodb://localhost:27017/IM'
+  url: 'mongodb://localhost:27017/Starter-App'
 
 };
