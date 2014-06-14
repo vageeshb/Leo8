@@ -1,0 +1,30 @@
+extends ../layouts/layout
+
+block content
+  include ../users/menu.jade
+  table#companies.table.table-bordered.table-hover
+    thead
+      tr.info
+        th.text-center Name
+        th.text-center Description
+        th.text-center Representatives
+        th(colspan=2).text-center Options
+    tbody
+      for company in companies
+        tr
+          td= company.name
+          td= company.description
+          td
+            ul
+              for rep in company.representatives
+                if rep.designation
+                  li #{rep.name} - #{rep.designation}
+                else
+                  li #{rep.name}
+          td.text-center
+            a(href='/company/' + company._id + '/edit').btn.btn-xs.btn-primary
+              span.glyphicon.glyphicon-pencil
+          td.text-center
+            a(href='#', rel=company._id).btn.btn-xs.btn-danger.deletecompany
+              span.glyphicon.glyphicon-trash
+  script(src='/js/company.js')

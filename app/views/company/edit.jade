@@ -1,0 +1,52 @@
+extends ../layouts/layout
+
+block content
+  include ../users/menu.jade
+  form.form-horizontal(action='/company/' + company._id, method='POST', role='form')
+    legend Edit Company Contact
+    input(type="hidden", name="_method", value="put")
+    .form-group
+      label.col-sm-2.control-label(for='name') Name
+      .col-sm-6
+        input(type="text", name="name", id="name", title="Company Name", value=company.name).form-control
+    .form-group
+      label.col-sm-2.control-label(for='desc') Description
+      .col-sm-6
+        textarea(name="desc", id="desc", title="Company Description").form-control
+          = company.description
+    .form-group
+      label.col-sm-2.control-label(for='desc') Representative's Name
+      .col-sm-6
+        div#rep-name-list(title='Representative\'s Name')
+          each rep in company.representatives
+            if rep.designation
+              div #{rep.name} - #{rep.designation} 
+                a(href='#',title='Remove Representative')
+                  span.glyphicon.glyphicon-remove-circle
+              input(type='hidden', name='contacts', value= '#{rep.name} - #{rep.designation}')
+    .form-group
+      .col-sm-10.col-sm-offset-2
+        a.btn.btn-primary(data-toggle='modal', href='#add-rep') Add Representative
+    hr  
+    .col-sm-10.col-sm-offset-2
+      button.btn.btn-primary(type='submit') Submit
+    #add-rep.modal.fade
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+            h4.modal-title Add Representative Contact
+          .modal-body
+            .row
+              label.col-sm-2.control-label(for='repName') Name
+              .col-sm-6
+                input.form-control(type='text', id='repNameModal', title='Representative Name')
+            br
+            .row
+              label.col-sm-2.control-label(for='repDesignation') Designation
+              .col-sm-6
+                input.form-control(type='text', id='repDesignationModal', title='Representative Designation')
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+            button#save-rep.btn.btn-primary(type='button', data-dismiss='modal') Save
+  script(src='/js/company.js')

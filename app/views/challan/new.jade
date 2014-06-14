@@ -1,43 +1,90 @@
 extends ../layouts/layout
 
 block content
-  form.form-horizontal(action='/challan/new', method='POST', role='form')
-    .form-group
-      legend Add New Challan
-    .form-group
-      table.table.table-bordered
-        thead
-          tr
-            th.col-sm-1.text-center
-              span.glyphicon.glyphicon-info-sign
-            th.col-sm-2 Item Name
-            th.col-sm-1 Qty
-            th.col-sm-2 Date Out
-            th.col-sm-2 Date In
-            th.col-sm-2 To
-            th.col-sm-2 From
-        tbody
-          tr
-            td.col-sm-1.text-center
-              a.btn.btn-sm.btn-danger.disabled
-                span.glyphicon.glyphicon-trash
-            td.col-sm-2
-              select(name="itemName", id="itemName").form-control 
-                option -- Select an item --
-                - each item in items
-                  option(value=item.name, id=item.id)= item.name
+  include ../users/menu.jade
+  form.form-horizontal(id='challanForm', action='/challan/new', method='POST', role='form')
+    legend Add New Challan
+    table#challan.table.table-bordered
+      thead
+        tr.info
+          th(rowspan=2).col-sm-1.text-center
+            span.glyphicon.glyphicon-info-sign
+          th(rowspan=2).text-center.col-sm-2 Item Name
+          th(rowspan=2).text-center.col-sm-1 Qty
+          th(rowspan=2).text-center.col-sm-1 Date Out
+          th(rowspan=2).text-center.col-sm-1 Date In
+          th(colspan=2).text-center.col-sm-2 To
+          th(rowspan=2).col-sm-1.text-center From
+        tr.info
+          th.text-center Company Name
+          th.text-center Representative
+      tbody
+        tr#default-row.hidden
+          td.col-sm-1.text-center
+            a#delRow.btn.btn-sm.btn-danger.disabled
+              span.glyphicon.glyphicon-trash
+          td.col-sm-2
+            select.form-control(name="itemName", id="itemName")
+              option(value="" disabled selected) Select an item
+              - each item in items
+                option(value=item.name, id=item.id)= item.name
+          td.col-sm-1
+            select.form-control(name='itemQty', id='itemQty', disabled='disabled')
+          td.col-sm-1
+            input.form-control(id='itemOut', name='itemOut', type="text")
+          td.col-sm-1
+            input.form-control(id='itemIn', name='itemIn', type="text")
+          if companies && companies.length > 0
             td.col-sm-1
-              select(name='itemQty', id='itemQty').form-control
-                option --
-            td.col-sm-2
-              input.form-control(id='itemOut', name='itemOut', type="text")
-            td.col-sm-2
-              input.form-control(id='itemIn', name='itemIn', type="text")
-            td.col-sm-2
-              input.form-control(id='itemTo', name='itemTo', type='text')
-            td.col-sm-2
-              input.form-control(id='itemFrom', name='itemFrom', type='text')
-            
-     button#addLine(type="button").btn.btn-primary Add Line
-     button(type="submit").btn.btn-primary Submit
+              select(name="itemToCompanyName", id="itemToCompanyName").form-control 
+                option(value="" disabled selected) Select a company
+                - each company in companies
+                  option(value=company.name, id=company.id)= company.name
+            td.col-sm-1
+              select.form-control(id='itemToRepName', name='itemToRepName', disabled='disabled', type='text')
+          else
+            td.col-sm-1
+              select.error.form-control(name="itemToCompanyName", id="itemToCompanyName", disabled='disabled')
+                option No Company Found
+            td.col-sm-1
+              select.form-control.error(id='itemToRepName', name='itemToRepName', type='text', disabled='disabled')
+          td.col-sm-1
+            input.form-control(id='itemFrom', name='itemFrom', type='text', value=user.name)
+        tr
+          td.col-sm-1.text-center
+            a#delRow.btn.btn-sm.btn-danger.disabled
+              span.glyphicon.glyphicon-trash
+          td.col-sm-2
+            select.form-control(name="itemName", id="itemName")
+              option(value="" disabled selected) Select an item
+              - each item in items
+                option(value=item.name, id=item.id)= item.name
+          td.col-sm-1
+            select.form-control(name='itemQty', id='itemQty', disabled='disabled')
+          td.col-sm-1
+            input.form-control(id='itemOut', name='itemOut', type="text")
+          td.col-sm-1
+            input.form-control(id='itemIn', name='itemIn', type="text")
+          if companies && companies.length > 0
+            td.col-sm-1
+              select(name="itemToCompanyName", id="itemToCompanyName").form-control 
+                option(value="" disabled selected) Select a company
+                - each company in companies
+                  option(value=company.name, id=company.id)= company.name
+            td.col-sm-1
+              select.form-control(id='itemToRepName', name='itemToRepName', disabled='disabled', type='text')
+          else
+            td.col-sm-1
+              select.error.form-control(name="itemToCompanyName", id="itemToCompanyName", disabled='disabled')
+                option No Company Found
+            td.col-sm-1
+              select.form-control.error(id='itemToRepName', name='itemToRepName', type='text', disabled='disabled')
+          td.col-sm-1
+            input.form-control(id='itemFrom', name='itemFrom', type='text', value=user.name)
+    if companies && companies.length > 0
+      button#addLine(type="button").btn.btn-primary Add Line
+      button(type="submit").btn.btn-primary Submit
+    else
+      button#addLine(type="button", disabled="disabled").btn.btn-primary Add Line
+      button(type="submit", disabled="disabled").btn.btn-primary Submit
   script(src='/js/challan.js')

@@ -1,13 +1,19 @@
 'use strict';
-
 var mongoose = require('mongoose'),
-  Item = require('./items');
+Schema = mongoose.Schema;
 
-var challanSchema = mongoose.Schema({
-  id: {type: Number},
-  items: [Item.schema],
-  status: {type: String}
-});
-
-// Export Challan model
-module.exports = mongoose.model('Challan', challanSchema);
+module.exports = mongoose.model('Challan', new Schema({
+  items: [{
+    name: {type: String},
+    qty: {type: Number},
+    out: {type: String},
+    in: {type: String},
+    to: {
+      companyName: {type: String},
+      repName: {type: String}
+    },
+    from: {type: String}
+  }],
+  status: {type: Boolean},
+  owner: {type: String}
+}));

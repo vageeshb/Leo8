@@ -1,7 +1,61 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #F7F7F7;
+}
+.container {
+  padding: 15px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  min-height: 480px;
 }
 
 a {
   color: #00B7FF;
+}
+
+legend {
+  background: #fff;
+  padding: 5px;
+}
+ul.menu {
+  margin-bottom: 10px;
+  padding: 7px;
+  background: #570007;
+  border-radius: 3px;
+}
+
+ul.menu li {
+  margin-right: 5px;
+  list-style: none;
+  display: inline-block;
+}
+
+.error {
+  border:1px solid red;
+}
+
+button {
+  margin-right: 5px;
+}
+
+/* Company Contact Styles */
+#rep-name-list {
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 4px;
+  background: #fff;
+  min-height: 34px;
+  padding: 9px;
+}
+
+#rep-name-list div {
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+.vcenter {
+  vertical-align: middle;
+}
+.btn-circle {
+  border-radius: 50%;
 }

@@ -44,7 +44,7 @@ module.exports = function(grunt) {
     wiredep: {
       target:{
         src: ['app/views/**/*.jade'],
-        ignorePath: '../../public'
+        ignorePath: '../../../public'
       }
     },
 

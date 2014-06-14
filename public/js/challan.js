@@ -1,47 +1,60 @@
 $(document).ready( function () {
 
-  $('tbody').on('click','tr td a#delItem', function () {
+  $('tbody').on('click','tr td a#delRow', function () {
     $(this).parent().parent().remove();
   });
 
   $('#addLine').click( function () {
-    var row = "\
-<tr>\
-  <td class='col-sm-1 text-center'>\
-    <a id='delItem' class='btn btn-sm btn-danger'>\
-      <span class='glyphicon glyphicon-trash'></span>\
-    </a>\
-  </td>\
-  <td class='col-sm-2'>\
-    <select class='form-control' id='itemName' name='itemName'>"
-    $('#itemName').children().each( function() {
-      if($(this).attr('value'))
-        row+= "<option value='" + $(this).attr('value') +"' id='" + $(this).attr('id') + "'>" + $(this).html() + "</option>";
-      else
-        row+= "<option>" + $(this).html() + "</option>";
-    });
-    row += "\
-  </select>\
-</td>\
-<td class='col-sm-1'>\
-  <select class='form-control' id='itemQty' name='itemQty'><option>--</option></select>\
-</td>\
-<td class='col-sm-2'><input type='text' class='form-control' id='itemOut' name='itemOut'></td><td class='col-sm-2'><input type='text' class='form-control' id='itemIn' name='itemIn'></td><td class='col-sm-2'><input type='text' class='form-control' id='itemTo' name='itemTo'></td><td class='col-sm-2'><input type='text' class='form-control' id='itemFrom' name='itemFrom'></td></tr>";
-    $('tbody').append(row);
+    var row = $('tbody tr:first').html();
+    $('tbody').append('<tr>' + row + '</tr>');
+    $('tr:last td:first a').removeClass('disabled');
+    row = null;
   });
 
   $('tbody').on('change', 'tr td select#itemName', function (e) {
-    var ele = $(this);
+    var qtyBox = $(this).parent().next().children().first();
+    qtyBox.children().remove();
+
     var id = this.options[e.target.selectedIndex].id;
-    $.ajax({
-      url: '/inventory/' + id,
-      method: 'GET'
-    }).done( function (qty) {
-      for(var i = 0; i < qty; i++)
-        ele.parent().next().children().first().append('<option>' + i + '</option>');
-    });
+    if(id) {
+      $.ajax({
+        url: '/inventory/' + id,
+        method: 'GET'
+      }).done( function (qty) {
+        qtyBox.removeClass('error');
+        for(var i = 1; i <= qty; i++)
+          qtyBox.append('<option>' + i + '</option>');
+        qtyBox.attr('disabled', null);
+      });
+    } else {
+      qtyBox.attr('disabled', 'disabled');
+    }
+  });
+  
+  $('tbody').on('change', 'tr td select#itemToCompanyName', function (e) {
+    var repBox = $(this).parent().next().children().first();
+    repBox.children().remove();
+
+    var id = this.options[e.target.selectedIndex].id;
+    if(id) {
+      $.ajax({
+        url: '/company/' + id + '/getReps',
+        method: 'GET'
+      }).done( function (representatives) {
+        if(representatives) {
+          repBox.removeClass('error');
+          representatives.forEach(function(rep) {
+            repBox.append('<option>' + rep.name + '</option>');
+          });
+          repBox.attr('disabled', null);
+        }
+      });
+    } else {
+      repBox.attr('disabled', 'disabled');
+    }
   });
 
+  // Date Picker
   $('tbody').on('focus', 'tr td input#itemOut', function(e) {
     var dateStart = $(this)
     .datepicker({
@@ -67,5 +80,34 @@ $(document).ready( function () {
       dateEnd.datepicker('hide');
     });  
   });
-  
+
+  $('tbody').on('change', 'tr td', function() {
+    $(this).find('input').removeClass('error');
+    $(this).find('select').removeClass('error');
+  });
+
+  $('#challanForm').submit( function(e) {
+    var shouldSubmit = true;
+    
+    var def = $('#default-row');
+    def.remove();
+
+    $('tbody tr').each( function(i, row) {
+     
+      var rows = $(row).children();
+      for (var i = 1; i < rows.length; i++) {
+        var element = rows[i];
+        if(!($(element).find('input').val() || $(element).find('select').val())) {
+          $(element).find('input').addClass('error');
+          $(element).find('select').addClass('error');
+          shouldSubmit = false;
+        }
+      }
+    });
+
+    if(!shouldSubmit)
+      $('tbody').prepend(def);
+    
+    return shouldSubmit;
+  });
 });

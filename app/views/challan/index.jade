@@ -1,19 +1,37 @@
 extends ../layouts/layout
 
 block content
+  include ../users/menu.jade
   table.table.table-bordered.table-hover
-    thead
-      tr
-        th(rowspan=2).text-center No
-        th(rowspan=2).text-center Name
-        th(rowspan=2).text-center Quatity
-        th(rowspan=2).text-center Date Out
-        th(rowspan=2).text-center Date In
-        th(colspan=2).text-center To
-        th.text-center From
-      tr
-        th.text-center Company Name
-        th.text-center Rep Name
-        th.text-center Name
-    tbody
-        =challans
+    tr.info
+      th(rowspan=2).text-center No
+      th(rowspan=2).text-center Name
+      th(rowspan=2).text-center Quatity
+      th(rowspan=2).text-center Date Out
+      th(rowspan=2).text-center Date In
+      th(colspan=2).text-center To
+      th(rowspan=2).text-center From
+      th(rowspan=2).text-center Status
+    tr.info
+      th.text-center Company Name
+      th.text-center Rep Name
+    for challan in challans
+      for item in challan.items
+        tr
+          - if(challan.items.indexOf(item) == 0)
+            td(rowspan=challan.items.length)= challan._id
+          td= item.name
+          td= item.qty
+          td= item.out
+          td= item.in
+          td= item.to.companyName
+          td= item.to.repName
+          td= item.from
+          - if(challan.items.indexOf(item) == 0)
+            - if(challan.status)
+              td(rowspan=challan.items.length).text-center.vcenter
+                a.btn.btn-sm.btn-circle.btn-success(href='#updateStatus', data-status='incomplete', data-id=challan._id): span.glyphicon.glyphicon-ok-circle 
+            - else
+              td(rowspan=challan.items.length).text-center.vcenter
+                a.btn.btn-sm.btn-circle.btn-danger(href='#updateStatus', data-status='complete', data-id=challan._id): span.glyphicon.glyphicon-remove-circle
+  script(src='/js/challanIndex.js')

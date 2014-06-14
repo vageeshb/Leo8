@@ -7,7 +7,8 @@ var express = require('express'),
   cookieParser = require('cookie-parser'),
   bodyParser = require('body-parser'),
   session = require('express-session'),
-  flash = require('connect-flash');
+  flash = require('connect-flash'),
+  methodOverride = require('method-override');
 
 module.exports = function (app, passport) {
 
@@ -20,6 +21,7 @@ module.exports = function (app, passport) {
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
+  app.use(methodOverride());
   app.use(cookieParser());
   app.use(session({ secret: 'keyboard cat' }));
   app.use(passport.initialize());

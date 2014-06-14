@@ -1,11 +1,13 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+  Schema = mongoose.Schema,
   bcrypt = require('bcrypt'),
   SALT_WORK_FACTOR = 10;
 
 var userSchema = mongoose.Schema({
   username: String,
+  name: String,
   password: String,
   role: String
 });
@@ -37,3 +39,4 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 
 // Export user model
 module.exports = mongoose.model('User', userSchema);
+exports.schema = userSchema;

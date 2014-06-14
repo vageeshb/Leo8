@@ -1,22 +1,33 @@
 extends ../layouts/layout
 
 block content
-  form.form-horizontal(action='', method='POST', role='form')
-    .form-group
-      legend Add Inventory Item
-      | 
+  include ../users/menu.jade
+  form.form-horizontal(action='/inventory/new', method='POST', role='form')
+    legend Add Inventory Item
     .form-group
       label.col-sm-2.control-label(for='name') Name
       .col-sm-6
-        input(type="text", name="name", id="name", title="Inventory Name").form-control
+        input(type="text", name="name", id="name", title="Item Name").form-control
+    .form-group
+      label.col-sm-2.control-label(for='brand') Brand
+      .col-sm-6
+        input(type="text", name="brand", id="brand", title="Item Brand").form-control
+    .form-group
+      label.col-sm-2.control-label(for='model') Model
+      .col-sm-6
+        input(type="text", name="model", id="model", title="Item Model").form-control
+    .form-group
+      label.col-sm-2.control-label(for='desc') Description
+      .col-sm-6
+        textarea(name="desc", id="desc", title="Item Description").form-control
     .form-group
       label.col-sm-2.control-label(for='qty') Quantity
       .col-sm-6
-        input(type="number", name="qty", id="qty", title="Inventory Name").form-control
+        input(type="number", min="0", name="qty", id="qty", title="Item Quantity").form-control
     .form-group
       label.col-sm-2.control-label(for='value') Value
       .col-sm-6
-        input(type="text", name="value", id="value", title="Inventory Name").form-control
+        input(type="text", name="value", id="value", title="Item Value").form-control
     hr  
     .col-sm-10.col-sm-offset-2
       button.btn.btn-primary(type='submit') Submit

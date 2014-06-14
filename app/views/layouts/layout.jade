@@ -2,17 +2,17 @@ doctype html
 html
   head
     title= (title == null) ? "Leo 8" : "Leo 8 | " + title
-    link(rel='stylesheet', href='/css/style.css')
     // bower:css
-    link(rel='stylesheet', href='..//bower_components/bootstrap/dist/css/bootstrap.css')
-    link(rel='stylesheet', href='..//bower_components/bootstrap-datepicker/css/datepicker.css')
-    link(rel='stylesheet', href='..//bower_components/bootstrap-datepicker/css/datepicker3.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap-datepicker/css/datepicker.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap-datepicker/css/datepicker3.css')
     // endbower
     // bower:js
-    script(src='..//bower_components/jquery/dist/jquery.js')
-    script(src='..//bower_components/bootstrap/dist/js/bootstrap.js')
-    script(src='..//bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js')
+    script(src='/bower_components/jquery/dist/jquery.js')
+    script(src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js')
     // endbower
+    link(rel='stylesheet', href='/css/style.css')
   body
     include navigation.jade
     div.container

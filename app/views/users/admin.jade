@@ -1,6 +1,34 @@
 extends ../layouts/layout
 
 block content
-  h1 welcome 
-  h2 #{user}
-  h3 #{role}
+  include menu.jade
+  table.table.table-bordered.table-hover
+    thead
+      tr.info
+        th Name
+        th Email
+        th Role
+        th(colspan=2) Options
+    tbody
+      each thisUser in users
+        tr
+          td= thisUser.name
+          td= thisUser.username
+          - if(thisUser.role == 1)
+            td(title='Admin Privileges')
+              a.btn.btn-xs.btn-success.btn-circle.disabled: span.glyphicon.glyphicon-user
+              |  Admin User 
+          - else
+            td(title='Basic Privileges')
+              a.btn.btn-xs.btn-primary.btn-circle.disabled: span.glyphicon.glyphicon-user
+              |  Basic User 
+          td Edit
+          - if(thisUser.role == 1)
+            td.text-center(title='Cannot delete another Admin User!')
+              a(href='#delete', rel=thisUser._id, disabled='disabled').btn.btn-xs.btn-danger.deleteuser
+                span.glyphicon.glyphicon-trash
+          - else
+            td.text-center
+              a(href='#delete', rel=thisUser._id).btn.btn-xs.btn-danger.deleteuser
+                span.glyphicon.glyphicon-trash
+  script(src='/js/dashboard.js')

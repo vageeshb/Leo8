@@ -1,0 +1,28 @@
+ul.menu
+  li.btn-group
+    button(type="button", class="btn btn-default dropdown-toggle", data-toggle="dropdown")
+      | Inventories 
+      span(class="caret")
+    ul(class="dropdown-menu", role="menu")
+      li
+        a(href='/inventory/new') Create Inventory Item
+        a(href='/inventories') View Inventory Items
+  li.btn-group
+    button(type="button", class="btn btn-default dropdown-toggle", data-toggle="dropdown")
+      | Challans 
+      span(class="caret")
+    ul(class="dropdown-menu", role="menu")
+      li
+        a(href='/challan/new') Create Challan
+        a(href='/challans') View Challans
+  li.btn-group
+    button(type="button", class="btn btn-default dropdown-toggle", data-toggle="dropdown")
+      | Companies 
+      span(class="caret")
+    ul(class="dropdown-menu", role="menu")
+      li
+        a(href='/company/new') Create Company Contact
+        a(href='/companies') View Company Contacts
+  li.pull-right: a.btn.btn-default(href='/profile') Profile
+  - if(user.role == 1)
+    li.pull-right: a.btn.btn-default(href='/manage') Manage Users

@@ -1,0 +1,32 @@
+extends ../layouts/layout
+
+block content
+  include ../users/menu.jade
+  table#items.table.table-bordered.table-hover
+    thead
+      tr.info
+        th.text-center Item ID
+        th.text-center Name
+        th.text-center Brand
+        th.text-center Model
+        th.text-center Description
+        th.text-center Value
+        th.text-center Quatity
+        th(colspan=2).text-center Options
+    tbody
+      for item in items
+        tr
+          td= item._id
+          td= item.name
+          td= item.brand
+          td= item.model
+          td= item.description
+          td= item.value
+          td= item.qty
+          td.text-center
+            a(href='/inventory/' + item._id + '/edit').btn.btn-xs.btn-primary
+              span.glyphicon.glyphicon-pencil
+          td.text-center
+            a(href='#', rel=item._id).btn.btn-xs.btn-danger.deleteitem
+              span.glyphicon.glyphicon-trash
+  script(src='/js/items.js')

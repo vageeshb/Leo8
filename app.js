@@ -3,13 +3,14 @@
 var express = require('express'),
   app = express(),
   mongoose = require('mongoose'),
-  db = require('./config/db'),
+  dbConfig = require('./config/db'),
   pass = require('./config/passport'),
   passport = require('passport');
-
-
+  
 // Database
-mongoose.connect(db.url);
+mongoose.connect(dbConfig.url, function () {
+  console.log('Connected to Database');
+});
 
 // Authentication
 require('./config/passport.js')(passport);

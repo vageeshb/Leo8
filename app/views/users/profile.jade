@@ -1,21 +1,27 @@
 extends ../layouts/layout
 
 block content
-  .btn-group
-    a(href='/inventory/new').btn.btn-default Add Inventory Item
-    a(href='/challan/new').btn.btn-default Add New Challan
-  
-  br
-  hr
-  
+  include menu.jade
   table.table.table-bordered.table-hover
     thead
-      tr
+      tr.info
         th Challan #
         th # of Items
-        th Out
-        th In
+        th Total Item Quantity
+        - if(user.role == 1)
+          th Created By
         th Status
     tbody
-      tr
-        td
+      each challan in challans
+        tr
+          td= challan._id
+          td= challan.numberOfItems
+          - if(user.role == 1)
+            td= challan.owner
+          td= challan.totalQty
+          - if(challan.status)
+            td.text-center.vcenter
+              a.btn.btn-sm.btn-circle.btn-success(href='#'): span.glyphicon.glyphicon-ok-circle 
+          - else
+            td.text-center.vcenter
+              a.btn.btn-sm.btn-circle.btn-danger(href='#'): span.glyphicon.glyphicon-remove-circle

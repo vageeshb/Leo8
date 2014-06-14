@@ -1,0 +1,35 @@
+extends ../layouts/layout
+
+block content
+  include ../users/menu.jade
+  form.form-horizontal(action='/inventory/' + item._id, method='POST', role='form')
+    legend Edit Inventory Item
+    input(type="hidden", name="_method", value="put")
+    .form-group
+      label.col-sm-2.control-label(for='name') Name
+      .col-sm-6
+        input(type="text", name="name", id="name", title="Inventory Name", value= item.name).form-control
+    .form-group
+      label.col-sm-2.control-label(for='brand') Brand
+      .col-sm-6
+        input(type="text", name="brand", id="brand", title="Item Brand", value=item.brand).form-control
+    .form-group
+      label.col-sm-2.control-label(for='model') Model
+      .col-sm-6
+        input(type="text", name="model", id="model", title="Item Model", value=item.model).form-control
+    .form-group
+      label.col-sm-2.control-label(for='desc') Description
+      .col-sm-6
+        textarea(name="desc", id="desc", title="Inventory Description").form-control
+          = item.description
+    .form-group
+      label.col-sm-2.control-label(for='qty') Quantity
+      .col-sm-6
+        input(type="number", min="0", name="qty", id="qty", title="Inventory Quantity", value=item.qty).form-control
+    .form-group
+      label.col-sm-2.control-label(for='value') Value
+      .col-sm-6
+        input(type="text", name="value", id="value", title="Inventory Value", value= item.value).form-control
+    hr  
+    .col-sm-10.col-sm-offset-2
+      button.btn.btn-primary(type='submit') Submit
