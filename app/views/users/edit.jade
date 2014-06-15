@@ -1,0 +1,22 @@
+extends ../layouts/layout
+
+block content
+  include menu.jade
+  form(action='/users/' + editUser.id + '/edit', method='POST', role='form')
+    legend Add User
+    .form-group
+      input.form-control(type='hidden', name='_method', value='PUT')
+      label(for='name') Name
+      input.form-control(type='text', placeholder='Enter Username', name='name', value=editUser.name)
+      br
+      label(for='username') Email
+      input.form-control(type='text', placeholder='Enter Username', name='username', value=editUser.username)
+      br
+      label(for='password') Password
+      input.form-control(type='password', placeholder='Enter Password', name='password')
+      br
+      label(for='role') Role
+      select.form-control(name='role')
+        option(value=0, selected = (editUser.role == 0 ? 'selected' : null)) Basic User
+        option(value=1, selected = (editUser.role == 1 ? 'selected' : null)) Admin User
+    button.btn.btn-primary(type='submit') Submit 
