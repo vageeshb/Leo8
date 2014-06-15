@@ -21,10 +21,10 @@ module.exports = {
         res.json({ msg: '' });
     });
   },
-  getNew: function(req, res) {
+  new: function(req, res) {
     res.render('company/new', {user: req.user});
   },
-  postNew: function(req, res) {
+  create: function(req, res) {
     var company = new Company(),
     contactsArr = [];
 
@@ -76,7 +76,7 @@ module.exports = {
 
   },
 
-  getEdit: function(req, res) {
+  edit: function(req, res) {
     Company.findById(req.params.id, function(err, company) {
       res.render('company/edit', {
         user: req.user,
@@ -85,7 +85,7 @@ module.exports = {
     });
   },
 
-  putEdit: function(req, res) {
+  update: function(req, res) {
 
     var updatedCompany = new Company(),
     

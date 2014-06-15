@@ -52,9 +52,10 @@ module.exports = function (passport) {
           var newUser       = new User();
 
           // set the user's local credentials
+          newUser.name      = req.body.name;
           newUser.username  = req.body.username;
           newUser.password  = req.body.password;
-          newUser.role      = "0";
+          newUser.role      = req.body.role;
           // save the user
           newUser.save(function(err) {
             if (err)
@@ -85,6 +86,7 @@ module.exports = function (passport) {
           if(err) return done(null, false, {message: 'Invalid Password.'});
           if (isMatch) // No validation errors, successful login
             return done(null, user);
+          return done(null, false, {message: 'Invalid Password.'});
         });
       });
     });

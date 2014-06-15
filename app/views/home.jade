@@ -1,6 +1,17 @@
 extends ./layouts/layout
 
 block content
-  p 
-  .jumbotron.text-center
-    h2 Leo8
+  .col-sm-8
+    .jumbotron.text-center
+      h1 Leo 8
+      h3 Invoice Management System
+  .col-sm-4
+    form(action='/login', method='POST', role='form')
+      legend Login
+      .form-group
+        label(for='username') Username
+        input.form-control(type='text', name='username', placeholder='Enter Username')
+        br
+        label(for='password') Password
+        input.form-control(type='password', name='password', placeholder='Enter Password')
+      button.btn.btn-primary(type='submit') Submit 

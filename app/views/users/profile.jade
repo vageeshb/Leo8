@@ -10,18 +10,23 @@ block content
         th Total Item Quantity
         - if(user.role == 1)
           th Created By
+          th Created On
         th Status
     tbody
-      each challan in challans
-        tr
-          td= challan._id
-          td= challan.numberOfItems
-          - if(user.role == 1)
-            td= challan.owner
-          td= challan.totalQty
-          - if(challan.status)
-            td.text-center.vcenter
-              a.btn.btn-sm.btn-circle.btn-success(href='#'): span.glyphicon.glyphicon-ok-circle 
-          - else
-            td.text-center.vcenter
-              a.btn.btn-sm.btn-circle.btn-danger(href='#'): span.glyphicon.glyphicon-remove-circle
+      if challans.length == 0
+        tr: td(colspan=(user.role == 1 ? 6 : 4)).text-center: strong No Challans Found!
+      else
+        each challan in challans
+          tr
+            td= challan.challanId
+            td= challan.numberOfItems
+            td= challan.totalQty
+            - if(user.role == 1)
+              td= challan.owner
+              td= challan.created.toDateString()
+            - if(challan.status)
+              td.text-center.vcenter
+                a.btn.btn-sm.btn-circle.btn-success(href='#'): span.glyphicon.glyphicon-ok-circle 
+            - else
+              td.text-center.vcenter
+                a.btn.btn-sm.btn-circle.btn-danger(href='#'): span.glyphicon.glyphicon-remove-circle

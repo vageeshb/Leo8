@@ -14,19 +14,22 @@ block content
         th.text-center Quatity
         th(colspan=2).text-center Options
     tbody
-      for item in items
-        tr
-          td= item._id
-          td= item.name
-          td= item.brand
-          td= item.model
-          td= item.description
-          td= item.value
-          td= item.qty
-          td.text-center
-            a(href='/inventory/' + item._id + '/edit').btn.btn-xs.btn-primary
-              span.glyphicon.glyphicon-pencil
-          td.text-center
-            a(href='#', rel=item._id).btn.btn-xs.btn-danger.deleteitem
-              span.glyphicon.glyphicon-trash
-  script(src='/js/items.js')
+      if items.length == 0
+        tr: td(colspan=9).text-center: strong No Items Found!
+      else
+        for item in items
+          tr
+            td= item.itemId
+            td= item.name
+            td= item.brand
+            td= item.model
+            td= item.description
+            td= item.value
+            td= item.qty
+            td.text-center
+              a(href='/inventory/' + item._id + '/edit').btn.btn-xs.btn-primary
+                span.glyphicon.glyphicon-pencil
+            td.text-center
+              a(href='#', rel=item._id).btn.btn-xs.btn-danger.deleteitem
+                span.glyphicon.glyphicon-trash
+        script(src='/js/items.js')

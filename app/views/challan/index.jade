@@ -11,27 +11,35 @@ block content
       th(rowspan=2).text-center Date In
       th(colspan=2).text-center To
       th(rowspan=2).text-center From
+      - if(user.role == 1)
+        th(rowspan=2).text-center Created On
       th(rowspan=2).text-center Status
     tr.info
       th.text-center Company Name
       th.text-center Rep Name
-    for challan in challans
-      for item in challan.items
-        tr
-          - if(challan.items.indexOf(item) == 0)
-            td(rowspan=challan.items.length)= challan._id
-          td= item.name
-          td= item.qty
-          td= item.out
-          td= item.in
-          td= item.to.companyName
-          td= item.to.repName
-          td= item.from
-          - if(challan.items.indexOf(item) == 0)
-            - if(challan.status)
-              td(rowspan=challan.items.length).text-center.vcenter
-                a.btn.btn-sm.btn-circle.btn-success(href='#updateStatus', data-status='incomplete', data-id=challan._id): span.glyphicon.glyphicon-ok-circle 
-            - else
-              td(rowspan=challan.items.length).text-center.vcenter
-                a.btn.btn-sm.btn-circle.btn-danger(href='#updateStatus', data-status='complete', data-id=challan._id): span.glyphicon.glyphicon-remove-circle
-  script(src='/js/challanIndex.js')
+    if challans.length == 0
+      tr
+        td(colspan=(user.role == 1 ? 10 : 9)).text-center: strong No Challans Found!
+    else
+      for challan in challans
+        for item in challan.items
+          tr
+            - if(challan.items.indexOf(item) == 0)
+              td(rowspan=challan.items.length)= challan.challanId
+            td= item.name
+            td= item.qty
+            td= item.out
+            td= item.in
+            td= item.to.companyName
+            td= item.to.repName
+            td= item.from
+            - if(challan.items.indexOf(item) == 0)
+              - if (user.role == 1)
+                td(rowspan=challan.items.length).text-center.vcenter= challan.created.toDateString()
+              - if(challan.status)
+                td(rowspan=challan.items.length).text-center.vcenter
+                  a.btn.btn-sm.btn-circle.btn-success(href='#updateStatus', data-status='incomplete', data-id=challan._id): span.glyphicon.glyphicon-ok-circle 
+              - else
+                td(rowspan=challan.items.length).text-center.vcenter
+                  a.btn.btn-sm.btn-circle.btn-danger(href='#updateStatus', data-status='complete', data-id=challan._id): span.glyphicon.glyphicon-remove-circle
+      script(src='/js/challanIndex.js')

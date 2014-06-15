@@ -5,14 +5,25 @@ var Item = require('../models/item'),
 
 module.exports = {
   index: function(req, res) {
-    var owner = req.user.name;
-    Challan.find({owner: owner}).sort({id: 1}).exec( function(err, challans) {
-      if(err) throw err;
-      res.render('challan/index', {
-        user: req.user,
-        challans: challans
+    var user = req.user;
+    if(user.role == 1) {
+      Challan.find().sort({id: 1}).exec( function(err, challans) {
+        if(err) throw err;
+        res.render('challan/index', {
+          user: req.user,
+          challans: challans
+        });
       });
-    });
+    }
+    else {
+      Challan.find({owner: user.name}).sort({id: 1}).exec( function(err, challans) {
+        if(err) throw err;
+        res.render('challan/index', {
+          user: req.user,
+          challans: challans
+        });
+      });
+    }
   },
   new: function(req, res) {
     Item.find().sort({name: 1}).exec( function(err, items) {

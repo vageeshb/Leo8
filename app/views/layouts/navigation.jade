@@ -3,11 +3,9 @@ nav.navbar.navbar-inverse
   ul.nav.navbar-nav.pull-right
     if (user)
       li.active
-        a(href='/profile', title='Click here to go to your profile') Logged in as #{user.username}
+        a(href='/profile', title='Click here to go to your profile') Logged in as #{user.name}
       li
         a(href="/logout") Logout
     else 
       li.active
-        a(href='/login') Login
-      li
-        a(href='/signup') Signup
+        a(href='/') Home

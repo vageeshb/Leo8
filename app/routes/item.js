@@ -32,11 +32,12 @@ module.exports = {
         res.json({ msg: '' });
     });
   },
-  getNew: function(req, res) {
+  new: function(req, res) {
     res.render('items/new', {user: req.user});
   },
-  postNew: function(req, res) {
+  create: function(req, res) {
     var item = new Item();
+
 
     item.name = req.body.name;
     item.qty = req.body.qty;
@@ -66,7 +67,7 @@ module.exports = {
     });
   },
 
-  getEdit: function(req, res) {
+  edit: function(req, res) {
     Item.findById(req.params.id, function(err, item) {
       res.render('items/edit', {
         user: req.user,
@@ -75,7 +76,7 @@ module.exports = {
     });
   },
 
-  putEdit: function(req, res) {
+  update: function(req, res) {
     var id = req.params.id,
     
     newItem = new Item();

@@ -37,6 +37,17 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 
+userSchema.methods.generateHash = function(password) {
+  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+    if(err) throw err;
+
+    bcrypt.hash(password, salt, function(err, hash) {
+      if(err) throw err;
+      return password;
+    });
+  });
+};
+
 // Export user model
 module.exports = mongoose.model('User', userSchema);
 exports.schema = userSchema;

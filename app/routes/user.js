@@ -4,11 +4,37 @@ var Challan = require('../models/challan'),
 User = require('../models/user');
 
 module.exports = {
-  login: function(req, res) {
-    res.render('users/login', { user: req.user, message: req.flash('error') });
+  add: function(req, res) {
+    res.render('users/add', {user: req.user, message: req.flash('error') });
   },
-  signup: function(req, res) {
-    res.render('users/signup', {user: req.user, message: req.flash('error') });
+  edit: function(req, res) {
+    var id = req.params.id;
+    User.findById(id, function(err, user) {
+      if(err) throw err;
+      res.render('users/edit', {user: req.user, editUser: user});
+    });
+  },
+  update: function(req, res) {
+    var id = req.params.id,
+    obj = req.body;
+
+    var updtUser = new User();
+
+    updtUser.name = obj.name;
+    updtUser.username = obj.username;
+    updtUser.password = updtUser.generateHash(obj.password);
+    updtUser.role = obj.role;
+
+    console.log(updtUser.password);
+
+    updtUser = updtUser.toObject();
+    delete updtUser._id;
+
+    User.findByIdAndUpdate(id, updtUser, function(err, user) {
+      if(err) throw err;
+      console.log(user);
+      res.redirect('/users/manage');
+    });
   },
   profile: function(req, res) {
     // Normal User
@@ -16,26 +42,40 @@ module.exports = {
       var name = req.user.name;
       Challan.find({owner: name}).sort({_id: 1}).exec( function(err, challans) {
         if(err) throw err;
-        extractChallanInfo(challans, function(err, resChallans) {
-          if(err) throw err;
+        if(challans.length > 0) {
+          extractChallanInfo(challans, function(err, resChallans) {
+            if(err) throw err;
+            res.render('users/profile', { 
+              user: req.user,
+              challans: resChallans
+            });        
+          });
+        } else {
           res.render('users/profile', { 
             user: req.user,
-            challans: resChallans
-          });        
-        });     
+            challans: []
+          });
+        }
       });
     }
     // Admin User
     else {
       Challan.find().sort({_id: 1}).exec( function(err, challans) {
         if(err) throw err;
-        extractChallanInfo(challans, function(err, resChallans) {
-          if(err) throw err;
+        if(challans.length > 0) {
+          extractChallanInfo(challans, function(err, resChallans) {
+            if(err) throw err;
+            res.render('users/profile', { 
+              user: req.user,
+              challans: resChallans
+            });        
+          });
+        } else {
           res.render('users/profile', { 
             user: req.user,
-            challans: resChallans
+            challans: []
           });        
-        });
+        }
       });
     }
   },
@@ -70,9 +110,11 @@ function extractChallanInfo(challans, cb) {
     });
     var challanObj = {
       _id: challan._id,
+      challanId: challan.challanId,
       owner: challan.owner,
       totalQty: totalQty,
       numberOfItems: numberOfItems,
+      created: challan.created,
       status: challan.status
     };
     resChallans.push(challanObj);
